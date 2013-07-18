@@ -28,22 +28,75 @@ static inline token_t getTokenFromString(char *str_token)
 	return token;
 }
 
+static inline int isWhiteSpace(char c)
+{
+	return c == ' ' || c == '\t' || c == '\n';
+}
+
+static char *getNextString(char **buffer_ptr)
+{
+	char *buffer = *buffer_ptr;
+	while (isWhiteSpace(*buffer))
+		++buffer;
+	if (*buffer == '\0')
+		return NULL;
+	int buffer_size = 2;
+
+	// For the first character and the null char at end
+	int actual_size = 2;
+	char *retval = malloc(sizeof(char) * buffer_size);
+	retval[0] = buffer[0];
+	++buffer;
+	while (!isWhiteSpace(*buffer) && *buffer != '(' && *buffer != ')' && *buffer != '\0')
+	{
+		++actual_size;
+		if (actual_size >= buffer_size)
+		{
+			buffer_size <<= 1;
+			realloc(retval, buffer_size);
+		}
+		retval[actual_size-2] = *buffer;
+		++buffer;
+	}
+	
+	retval[actual_size-1] = '\0';
+	*buffer_ptr = buffer;
+	return retval;
+}
+
 token_t *parse(FILE *fd, int *size)
 {
 	int arr_size = 4;
 	int num_tokens = 0;
 	token_t *tokens = malloc(sizeof(token_t) * arr_size);
+	char *str_token = NULL;
+	char *line = NULL;
+	int cont = 1;
+	int linesize;
+	while(cont)
 	{
-		if (num_tokens >= arr_size)
+		if (getline(&line, &linesize, fd) == -1)
+			cont = 0;
+		else
 		{
-			arr_size <<= 1;
-			realloc(tokens, sizeof(token_t) * arr_size);
+			// So we can still free line later
+			char *line_it = line;
+			while ((str_token = getNextString(&line_it)) != NULL)
+			{
+				puts(str_token);
+				if (num_tokens >= arr_size)
+				{
+					arr_size <<= 1;
+					realloc(tokens, sizeof(token_t) * arr_size);
+				}
+
+				tokens[num_tokens] = getTokenFromString(str_token);
+
+				++num_tokens;
+			}
 		}
-
-		tokens[num_tokens] = getTokenFromString(str_token);
-
-		++num_tokens;
 	}
+	free(line);
 
 	*size = num_tokens;
 

@@ -5,7 +5,13 @@ extern const int KEYWORD_TYPE;
 extern const int VARIABLE_TYPE;
 extern const int LITERAL_TYPE;
 extern const int NUM_KEYWORDS;
-extern char *KEYWORDS[2];
+
+extern char *KEYWORDS[5];
+extern const int LEFT_PAREN;
+extern const int RIGHT_PAREN;
+extern const int INSOFARAS;
+extern const int BRING_ME_BACK_SOMETHING_GOOD;
+extern const int YKNOW;
 
 typedef struct
 {

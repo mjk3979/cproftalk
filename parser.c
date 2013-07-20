@@ -110,7 +110,7 @@ token_t *parse(FILE *fd, int *size)
 				if (num_tokens >= arr_size)
 				{
 					arr_size <<= 1;
-					realloc(tokens, sizeof(token_t) * arr_size);
+					tokens = realloc(tokens, sizeof(token_t) * arr_size);
 				}
 
 				tokens[num_tokens] = getTokenFromString(str_token);
@@ -124,7 +124,7 @@ token_t *parse(FILE *fd, int *size)
 	*size = num_tokens;
 
 	// clean up unused memory
-	realloc(tokens, sizeof(token_t) * num_tokens);
+	tokens = realloc(tokens, sizeof(token_t) * num_tokens);
 
 	return tokens;
 }

@@ -95,7 +95,7 @@ token_t *parse(FILE *fd, int *size)
 	char *str_token = NULL;
 	char *line = NULL;
 	int cont = 1;
-	int linesize;
+	size_t linesize;
 	while(cont)
 	{
 		if (getline(&line, &linesize, fd) == -1)

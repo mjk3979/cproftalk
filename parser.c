@@ -64,18 +64,23 @@ static char *getNextString(char **buffer_ptr)
 	int actual_size = 2;
 	char *retval = malloc(sizeof(char) * buffer_size);
 	retval[0] = buffer[0];
-	++buffer;
-	while (!isWhiteSpace(*buffer) && *buffer != '(' && *buffer != ')' && *buffer != '\0')
+	if (*buffer != '(' && *buffer != ')')
 	{
-		++actual_size;
-		if (actual_size >= buffer_size)
-		{
-			buffer_size <<= 1;
-			realloc(retval, buffer_size);
-		}
-		retval[actual_size-2] = *buffer;
 		++buffer;
+		while (!isWhiteSpace(*buffer) && *buffer != '(' && *buffer != ')' && *buffer != '\0')
+		{
+			++actual_size;
+			if (actual_size >= buffer_size)
+			{
+				buffer_size <<= 1;
+				retval = realloc(retval, buffer_size);
+			}
+			retval[actual_size-2] = *buffer;
+			++buffer;
+		}
 	}
+	else
+		++buffer;
 	
 	retval[actual_size-1] = '\0';
 	*buffer_ptr = buffer;

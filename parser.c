@@ -29,8 +29,20 @@ static inline token_t getTokenFromString(char *str_token)
 			return token;
 		}
 	}
-	token.type = VARIABLE_TYPE;
-	token.name = str_token;
+	int val;
+	char *checker;
+	val = strtol(str_token, &checker, 10);
+	if (checker != '\0')
+	{
+		token.type = VARIABLE_TYPE;
+		token.name = str_token;
+	}
+	else
+	{
+		token.type = LITERAL_TYPE;
+		token.value = val;
+		free(str_token);
+	}
 	return token;
 }
 

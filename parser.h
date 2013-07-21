@@ -6,6 +6,7 @@
 extern const int KEYWORD_TYPE;
 extern const int VARIABLE_TYPE;
 extern const int LITERAL_TYPE;
+extern const int LIST_TYPE;
 extern const int NUM_KEYWORDS;
 
 extern char *KEYWORDS[5];

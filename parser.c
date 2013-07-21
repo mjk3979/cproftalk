@@ -6,6 +6,7 @@
 const int KEYWORD_TYPE = 0;
 const int VARIABLE_TYPE = 1;
 const int LITERAL_TYPE = 2;
+const int LIST_TYPE = 3;
 const int NUM_KEYWORDS = 5;
 
 char *KEYWORDS[5] = {"(", ")", "insofaras", "bring-me-back-something-good", "yknow"};

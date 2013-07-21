@@ -12,6 +12,7 @@ struct node_t
 typedef struct
 {
 	node_t *head;
+	node_t *back;
 } ll_t;
 
 ll_t makeList();
@@ -19,5 +20,9 @@ ll_t makeList();
 void push(ll_t *list, void *data);
 
 void *pop(ll_t *list);
+
+void *peek(ll_t *list);
+
+void pushBack(ll_t *list, void *data);
 
 #endif

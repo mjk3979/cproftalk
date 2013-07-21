@@ -16,6 +16,9 @@ test_linkedlist: linkedlist.o test_linkedlist.c
 	gcc $(CFLAGS) -c test_linkedlist.c
 	gcc $(CFLAGS) -o test_linkedlist test_linkedlist.o linkedlist.o
 
+lexer: lexer.h lexer.c
+	gcc $(CFLAGS) -c lexer.c
+
 clean:
 	rm -f *.o
 

@@ -1,6 +1,8 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include <stdio.h>
+
 extern const int KEYWORD_TYPE;
 extern const int VARIABLE_TYPE;
 extern const int LITERAL_TYPE;

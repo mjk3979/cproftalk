@@ -15,3 +15,10 @@ linkedlist: linkedlist.h linkedlist.c
 test_linkedlist: linkedlist.o test_linkedlist.c
 	gcc $(CFLAGS) -c test_linkedlist.c
 	gcc $(CFLAGS) -o test_linkedlist test_linkedlist.o linkedlist.o
+
+clean:
+	rm -f *.o
+
+realclean: clean
+	rm -f test_parser
+	rm -f test_linkedlist

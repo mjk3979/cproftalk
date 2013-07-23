@@ -22,9 +22,9 @@ static inline token_t getTokenFromString(char *str_token)
 		}
 	}
 	int val;
-	char *checker;
+	char *checker = NULL;
 	val = strtol(str_token, &checker, 10);
-	if (checker != '\0')
+	if (*checker != '\0')
 	{
 		token.type = VARIABLE_TYPE;
 		token.name = str_token;

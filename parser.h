@@ -4,18 +4,20 @@
 #include <stdio.h>
 #include "linkedlist.h"
 
-extern const int KEYWORD_TYPE;
-extern const int VARIABLE_TYPE;
-extern const int LITERAL_TYPE;
-extern const int LIST_TYPE;
-extern const int NUM_KEYWORDS;
+#define KEYWORD_TYPE	0
+#define VARIABLE_TYPE	1
+#define LITERAL_TYPE	2
+#define LIST_TYPE		3
+
+#define NUM_KEYWORDS	5
+
+#define LEFT_PAREN		0
+#define RIGHT_PAREN		1
+#define INSOFARAS		2
+#define BRING_ME_BACK_SOMETHING_GOOD	3
+#define YKNOW			4
 
 extern char *KEYWORDS[5];
-extern const int LEFT_PAREN;
-extern const int RIGHT_PAREN;
-extern const int INSOFARAS;
-extern const int BRING_ME_BACK_SOMETHING_GOOD;
-extern const int YKNOW;
 
 typedef struct
 {

@@ -1,20 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 #include "parser.h"
-
-const int KEYWORD_TYPE = 0;
-const int VARIABLE_TYPE = 1;
-const int LITERAL_TYPE = 2;
-const int LIST_TYPE = 3;
-const int NUM_KEYWORDS = 5;
+#include "linkedlist.h"
 
 char *KEYWORDS[5] = {"(", ")", "insofaras", "bring-me-back-something-good", "yknow"};
-const int LEFT_PAREN = 0;
-const int RIGHT_PAREN = 1;
-const int INSOFARAS = 2;
-const int BRING_ME_BACK_SOMETHING_GOOD = 3;
-const int YKNOW = 4;
 
 static inline token_t getTokenFromString(char *str_token)
 {

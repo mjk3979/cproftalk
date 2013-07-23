@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "lexer.h"
 #include "parser.h"
+#include "lexer.h"
 
 proftalk_expr_t lex(ll_t *tokens)
 {

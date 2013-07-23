@@ -2,11 +2,11 @@ CFLAGS=-ggdb -Wall -Wextra
 
 tests: test_linkedlist test_parser test_lexer
 
-test_parser: parser.o test_parser.c
+test_parser: parser.o test_parser.c linkedlist.o
 	gcc $(CFLAGS) -c test_parser.c
-	gcc $(CFLAGS) -o test_parser test_parser.o parser.o
+	gcc $(CFLAGS) -o test_parser test_parser.o parser.o linkedlist.o
 
-parser: parser.h parser.c
+parser: parser.h parser.c linkedlist.h
 	gcc $(CFLAGS) -c parser.c
 
 linkedlist: linkedlist.h linkedlist.c

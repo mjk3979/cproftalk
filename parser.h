@@ -2,6 +2,7 @@
 #define PARSER_H
 
 #include <stdio.h>
+#include "linkedlist.h"
 
 extern const int KEYWORD_TYPE;
 extern const int VARIABLE_TYPE;
@@ -23,6 +24,6 @@ typedef struct
 	int value;
 } token_t;
 
-token_t *parse(FILE *fd, int *size);
+ll_t parse(FILE *fd, int *size);
 
 #endif

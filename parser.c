@@ -88,11 +88,12 @@ static char *getNextString(char **buffer_ptr)
 	return retval;
 }
 
-token_t *parse(FILE *fd, int *size)
+ll_t parse(FILE *fd, int *size)
 {
+	token_t *token = NULL;
 	int arr_size = 4;
 	int num_tokens = 0;
-	token_t *tokens = malloc(sizeof(token_t) * arr_size);
+	ll_t tokens = makeList();
 	char *str_token = NULL;
 	char *line = NULL;
 	int cont = 1;
@@ -107,14 +108,9 @@ token_t *parse(FILE *fd, int *size)
 			char *line_it = line;
 			while ((str_token = getNextString(&line_it)) != NULL)
 			{
-				puts(str_token);
-				if (num_tokens >= arr_size)
-				{
-					arr_size <<= 1;
-					tokens = realloc(tokens, sizeof(token_t) * arr_size);
-				}
-
-				tokens[num_tokens] = getTokenFromString(str_token);
+				token = malloc(sizeof(token_t));
+				*token = getTokenFromString(str_token);
+				pushBack(&tokens, token);
 
 				++num_tokens;
 			}
@@ -123,9 +119,6 @@ token_t *parse(FILE *fd, int *size)
 	free(line);
 
 	*size = num_tokens;
-
-	// clean up unused memory
-	tokens = realloc(tokens, sizeof(token_t) * num_tokens);
 
 	return tokens;
 }

@@ -30,6 +30,9 @@ test_evaluator: evaluator.o lexer.o parser.o linkedlist.o
 	gcc $(CFLAGS) -c test_evaluator.c
 	gcc $(CFLAGS) -o test_evaluator test_evaluator.o lexer.o parser.o linkedlist.o evaluator.o
 
+env: env.h env.c
+	gcc $(CFLAGS) -c env.c
+
 clean:
 	rm -f *.o
 

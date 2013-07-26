@@ -1,6 +1,6 @@
 CFLAGS=-ggdb -Wall -Wextra
 
-tests: test_linkedlist test_parser test_lexer test_evaluator
+tests: test_linkedlist test_parser test_lexer test_evaluator test_env
 
 test_parser: parser.o test_parser.c linkedlist.o
 	gcc $(CFLAGS) -c test_parser.c
@@ -32,6 +32,10 @@ test_evaluator: evaluator.o lexer.o parser.o linkedlist.o
 
 env: env.h env.c
 	gcc $(CFLAGS) -c env.c
+
+test_env: env.o test_env.c linkedlist.o parser.o lexer.o
+	gcc $(CFLAGS) -c test_env.c
+	gcc $(CFLAGS) -o test_env test_env.o parser.o lexer.o env.o linkedlist.o
 
 clean:
 	rm -f *.o

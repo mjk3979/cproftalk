@@ -1,6 +1,14 @@
 #include <string.h>
 #include "env.h"
 
+env_t makeEnv(env_t *parent)
+{
+	env_t newEnv;
+	newEnv.vars = makeList();
+	newEnv.parent = parent;
+	return newEnv;
+}
+
 int env_find(env_t *env, char *name, proftalk_expr_t *result)
 {
 	if (env == NULL)

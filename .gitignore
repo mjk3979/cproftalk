@@ -3,3 +3,4 @@ test_parser
 test_lexer
 test_evaluator
 test_linkedlist
+test_env

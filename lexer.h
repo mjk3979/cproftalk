@@ -11,6 +11,7 @@ struct proftalk_expr_t
 	int type;
 	int value;
 	ll_t expressions;
+	char *name;
 };
 	
 proftalk_expr_t lex(ll_t *tokens);

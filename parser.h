@@ -8,6 +8,7 @@
 #define VARIABLE_TYPE	1
 #define LITERAL_TYPE	2
 #define LIST_TYPE		3
+#define LAMBDA_TYPE		4
 
 #define NUM_KEYWORDS	5
 

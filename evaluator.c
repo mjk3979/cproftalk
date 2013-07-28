@@ -36,6 +36,24 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			retval.expressions = *args;
 			return retval;
 		}
+		case PLUS:
+		{
+			proftalk_expr_t arg1 = eval(*(proftalk_expr_t *)pop(args), env);
+			proftalk_expr_t arg2 = eval(*(proftalk_expr_t *)pop(args), env);
+			if (arg1.type != LITERAL_TYPE)
+			{
+				fputs("Invalid first arg to addition", stderr);
+				exit(1);
+			}
+			if (arg2.type != LITERAL_TYPE)
+			{
+				fputs("Invalid second arg to addition", stderr);
+				exit(1);
+			}
+			arg1.value += arg2.value;
+			return arg1;
+		}
+
 	}
 	assert(0);
 }

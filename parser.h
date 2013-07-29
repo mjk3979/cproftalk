@@ -10,16 +10,26 @@
 #define LIST_TYPE		3
 #define LAMBDA_TYPE		4
 
-#define NUM_KEYWORDS	6
+#define NUM_KEYWORDS	15
 
 #define LEFT_PAREN		0
 #define RIGHT_PAREN		1
 #define INSOFARAS		2
 #define BRING_ME_BACK_SOMETHING_GOOD	3
 #define YKNOW			4
-#define PLUS			5
 
-extern char *KEYWORDS[6];
+#define PLUS			5
+#define MINUS			6
+#define MULTIPLY		7
+#define DIVIDE			8
+#define MOD				9
+#define EQUALS			10
+#define LESS_THAN		11
+#define GREATER_THAN	12
+#define LESS_THAN_EQUAL	13
+#define GREATER_THAN_EQUAL	14
+
+extern char *KEYWORDS[15];
 
 typedef struct
 {

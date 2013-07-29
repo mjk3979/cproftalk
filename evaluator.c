@@ -7,6 +7,60 @@
 #include "evaluator.h"
 #include "env.h"
 
+static proftalk_expr_t handleArithmetic(int function_id, ll_t *args, env_t *env)
+{
+	proftalk_expr_t arg1 = eval(*(proftalk_expr_t *)pop(args), env);
+	proftalk_expr_t arg2 = eval(*(proftalk_expr_t *)pop(args), env);
+
+	proftalk_expr_t retval;
+	retval.type = LITERAL_TYPE;
+
+	if (arg1.type != LITERAL_TYPE)
+	{
+		fputs("Invalid first arg to arithmetic operation", stderr);
+		exit(1);
+	}
+	if (arg2.type != LITERAL_TYPE)
+	{
+		fputs("Invalid second arg to arithmetic operation", stderr);
+		exit(1);
+	}
+	switch(function_id)
+	{
+		case PLUS:
+			retval.value = arg1.value + arg2.value;
+			break;
+		case MINUS:
+			retval.value = arg1.value - arg2.value;
+			break;
+		case MULTIPLY:
+			retval.value = arg1.value * arg2.value;
+			break;
+		case DIVIDE:
+			retval.value = arg1.value / arg2.value;
+			break;
+		case MOD:
+			retval.value = arg1.value % arg2.value;
+			break;
+		case EQUALS:
+			retval.value = arg1.value == arg2.value;
+			break;
+		case LESS_THAN:
+			retval.value = arg1.value < arg2.value;
+			break;
+		case GREATER_THAN:
+			retval.value = arg1.value > arg2.value;
+			break;
+		case LESS_THAN_EQUAL:
+			retval.value = arg1.value <= arg2.value;
+			break;
+		case GREATER_THAN_EQUAL:
+			retval.value = arg1.value >= arg2.value;
+			break;
+	}
+	return retval;
+}
+
 static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 {
 	switch(function_id)
@@ -37,22 +91,16 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			return retval;
 		}
 		case PLUS:
-		{
-			proftalk_expr_t arg1 = eval(*(proftalk_expr_t *)pop(args), env);
-			proftalk_expr_t arg2 = eval(*(proftalk_expr_t *)pop(args), env);
-			if (arg1.type != LITERAL_TYPE)
-			{
-				fputs("Invalid first arg to addition", stderr);
-				exit(1);
-			}
-			if (arg2.type != LITERAL_TYPE)
-			{
-				fputs("Invalid second arg to addition", stderr);
-				exit(1);
-			}
-			arg1.value += arg2.value;
-			return arg1;
-		}
+		case MINUS:
+		case MULTIPLY:
+		case DIVIDE:
+		case MOD:
+		case EQUALS:
+		case LESS_THAN:
+		case GREATER_THAN:
+		case LESS_THAN_EQUAL:
+		case GREATER_THAN_EQUAL:
+			return handleArithmetic(function_id, args, env);
 
 	}
 	assert(0);

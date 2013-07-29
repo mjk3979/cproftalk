@@ -10,7 +10,7 @@
 #define LIST_TYPE		3
 #define LAMBDA_TYPE		4
 
-#define NUM_KEYWORDS	15
+#define NUM_KEYWORDS	18
 
 #define LEFT_PAREN		0
 #define RIGHT_PAREN		1
@@ -28,8 +28,11 @@
 #define GREATER_THAN	12
 #define LESS_THAN_EQUAL	13
 #define GREATER_THAN_EQUAL	14
+#define AND				15
+#define OR				16
+#define NOT				17
 
-extern char *KEYWORDS[15];
+extern char *KEYWORDS[18];
 
 typedef struct
 {

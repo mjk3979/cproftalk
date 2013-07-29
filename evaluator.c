@@ -7,6 +7,27 @@
 #include "evaluator.h"
 #include "env.h"
 
+static proftalk_expr_t handleUniary(int function_id, ll_t *args, env_t *env)
+{
+	proftalk_expr_t arg = eval(*(proftalk_expr_t *)pop(args), env);
+	proftalk_expr_t retval;
+	retval.type = LITERAL_TYPE;
+
+	if (arg.type != LITERAL_TYPE)
+	{
+		fputs("Invalid first arg to arithmetic operation", stderr);
+		exit(1);
+	}
+
+	switch (function_id)
+	{
+		case NOT:
+			retval.value = !arg.value;
+			break;
+	}
+	return retval;
+}
+
 static proftalk_expr_t handleBinary(int function_id, ll_t *args, env_t *env)
 {
 	proftalk_expr_t arg1 = eval(*(proftalk_expr_t *)pop(args), env);
@@ -57,6 +78,12 @@ static proftalk_expr_t handleBinary(int function_id, ll_t *args, env_t *env)
 		case GREATER_THAN_EQUAL:
 			retval.value = arg1.value >= arg2.value;
 			break;
+		case AND:
+			retval.value = arg1.value && arg2.value;
+			break;
+		case OR:
+			retval.value = arg1.value || arg2.value;
+			break;
 	}
 	return retval;
 }
@@ -100,7 +127,11 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 		case GREATER_THAN:
 		case LESS_THAN_EQUAL:
 		case GREATER_THAN_EQUAL:
+		case AND:
+		case OR:
 			return handleBinary(function_id, args, env);
+		case NOT:
+			return handleUniary(function_id, args, env);
 
 	}
 	assert(0);

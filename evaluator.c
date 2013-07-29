@@ -7,7 +7,7 @@
 #include "evaluator.h"
 #include "env.h"
 
-static proftalk_expr_t handleArithmetic(int function_id, ll_t *args, env_t *env)
+static proftalk_expr_t handleBinary(int function_id, ll_t *args, env_t *env)
 {
 	proftalk_expr_t arg1 = eval(*(proftalk_expr_t *)pop(args), env);
 	proftalk_expr_t arg2 = eval(*(proftalk_expr_t *)pop(args), env);
@@ -100,7 +100,7 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 		case GREATER_THAN:
 		case LESS_THAN_EQUAL:
 		case GREATER_THAN_EQUAL:
-			return handleArithmetic(function_id, args, env);
+			return handleBinary(function_id, args, env);
 
 	}
 	assert(0);

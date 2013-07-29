@@ -45,3 +45,4 @@ realclean: clean
 	rm -f test_linkedlist
 	rm -f test_lexer
 	rm -f test_evaluator
+	rm -f test_env

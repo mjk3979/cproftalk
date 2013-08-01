@@ -10,7 +10,7 @@
 #define LIST_TYPE		3
 #define LAMBDA_TYPE		4
 
-#define NUM_KEYWORDS	18
+#define NUM_KEYWORDS	19	
 
 #define LEFT_PAREN		0
 #define RIGHT_PAREN		1
@@ -32,7 +32,9 @@
 #define OR				16
 #define NOT				17
 
-extern char *KEYWORDS[18];
+#define BEGIN			18
+
+extern char *KEYWORDS[NUM_KEYWORDS];
 
 typedef struct
 {

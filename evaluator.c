@@ -117,6 +117,27 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			retval.expressions = *args;
 			return retval;
 		}
+		case YKNOW:
+		{
+			proftalk_expr_t name_expr = *(proftalk_expr_t *)pop(args);
+			if (name_expr.type != VARIABLE_TYPE)
+			{
+				fputs("Invalid name for yknow", stderr);
+				exit(1);
+			}
+			proftalk_expr_t value = eval(*(proftalk_expr_t *)pop(args), env);
+			env_insert(&global_env, name_expr.name, value);
+			return;
+		}
+		case BEGIN:
+		{
+			proftalk_expr_t retval;
+			while (args->head != NULL)
+			{
+				retval = eval(*(proftalk_expr_t *)pop(args), env);
+			}
+			return retval;
+		}
 		case PLUS:
 		case MINUS:
 		case MULTIPLY:

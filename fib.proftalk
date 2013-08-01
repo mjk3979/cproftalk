@@ -1,0 +1,4 @@
+(begin 
+(yknow fib (bring-me-back-something-good (x) (insofaras (< x 2) x (+ (fib (- x 1)) (fib (- x 2))))))
+(fib 30)
+)

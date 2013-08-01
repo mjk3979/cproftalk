@@ -170,7 +170,7 @@ static proftalk_expr_t evalLambda(proftalk_expr_t lambda, ll_t *args, env_t *env
 			fputs("Invalid parameter list.", stderr);
 			exit(1);
 		}
-		proftalk_expr_t argExpr = *(proftalk_expr_t *)pop(args);
+		proftalk_expr_t argExpr = eval(*(proftalk_expr_t *)pop(args), env);
 		env_insert(env, paramExpr.name, argExpr);
 	}
 	proftalk_expr_t toEval = *(proftalk_expr_t *)pop(&lambda.expressions);

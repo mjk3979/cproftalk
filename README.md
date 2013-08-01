@@ -9,7 +9,7 @@ proftalk is a cool scheme variant designed by algorithmicist and myself. It was 
 
 Keywords
 ========
-algorithmicist and I both go to RIT, which is an awesome university. When we decided to make this scheme variant, we wanted to give it something unique, so we decided to make the keywords phrases that our professors often say. I'll eventually work on documenting what the mapping is, but until then use the source code to figure it out.
+algorithmicist and I both go to RIT (which is an awesome university btw). When we decided to make this scheme variant, we wanted to give it something unique, so we decided to make the keywords phrases that our professors often say. I'll eventually work on documenting what the mapping is, but until then use the source code to figure it out.
 
 To compile
 ==========

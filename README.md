@@ -13,4 +13,4 @@ On a GNU/Linux machine, all you should need to do is run make. It's that easy. I
 
 To use
 ======
-Currently code is interpreted by the test_evaluator binary. Just pipe files to that binary on stdin and it will evaluate it. Don't expect much though, no alot of things have been implemented yet.
+Currently code is interpreted by the test_evaluator binary. Just pipe files to that binary on stdin and it will evaluate it. Don't expect much though, not alot of things have been implemented yet.

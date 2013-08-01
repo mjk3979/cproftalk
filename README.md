@@ -14,3 +14,7 @@ On a GNU/Linux machine, all you should need to do is run make. It's that easy. I
 To use
 ======
 Currently code is interpreted by the test_evaluator binary. Just pipe files to that binary on stdin and it will evaluate it. Don't expect much though, not alot of things have been implemented yet.
+
+Examples
+========
+Look at fib.proftalk for a simple example. It defines a function that calculates Fibonacci numbers. I actually forgot a lot of Scheme since I learned it, so I don't think what my interpreter does is correct, and therefore this example code is probably not valid scheme.

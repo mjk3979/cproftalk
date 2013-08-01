@@ -18,6 +18,8 @@ struct env_t
 	env_t *parent;
 };
 
+env_t global_env;
+
 env_t makeEnv(env_t *parent);
 
 int env_find(env_t *env, char *name, proftalk_expr_t *result);

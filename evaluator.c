@@ -138,6 +138,8 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			}
 			return retval;
 		}
+		case THIS_GUY:
+			return *(proftalk_expr_t *)pop(args);
 		case PLUS:
 		case MINUS:
 		case MULTIPLY:

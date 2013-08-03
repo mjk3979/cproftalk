@@ -10,7 +10,7 @@
 #define LIST_TYPE		3
 #define LAMBDA_TYPE		4
 
-#define NUM_KEYWORDS	19	
+#define NUM_KEYWORDS	20
 
 #define LEFT_PAREN		0
 #define RIGHT_PAREN		1
@@ -33,6 +33,7 @@
 #define NOT				17
 
 #define BEGIN			18
+#define THIS_GUY		19
 
 extern char *KEYWORDS[NUM_KEYWORDS];
 

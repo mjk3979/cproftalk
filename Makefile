@@ -26,7 +26,7 @@ test_lexer: lexer.o test_lexer.c parser.o linkedlist.o
 evaluator: evaluator.h evaluator.c lexer.h parser.h linkedlist.h env.h
 	gcc $(CFLAGS) -c evaluator.c
 
-test_evaluator: evaluator.o lexer.o parser.o linkedlist.o env.o
+test_evaluator: evaluator.o lexer.o parser.o linkedlist.o env.o test_evaluator.c
 	gcc $(CFLAGS) -c test_evaluator.c
 	gcc $(CFLAGS) -o test_evaluator test_evaluator.o lexer.o parser.o linkedlist.o evaluator.o env.o
 

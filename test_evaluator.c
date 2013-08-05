@@ -6,7 +6,7 @@
 
 static void print_expr(proftalk_expr_t expr)
 {
-	if (expr.value == LIST_TYPE)
+	if (expr.type == LIST_TYPE)
 	{
 		printf("( ");
 

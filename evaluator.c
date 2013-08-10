@@ -140,6 +140,16 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 		}
 		case THIS_GUY:
 			return *(proftalk_expr_t *)pop(args);
+		case ONE_LESS_CAR:
+		{
+			proftalk_expr_t list = eval(*(proftalk_expr_t *)pop(args), env);
+			if (list.type != LIST_TYPE)
+			{
+				fputs("Invalid type for one-less-car", stderr);
+				exit(1);
+			}
+			return *(proftalk_expr_t *)pop(&list.expressions);
+		}
 		case PLUS:
 		case MINUS:
 		case MULTIPLY:

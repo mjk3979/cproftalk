@@ -215,6 +215,20 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			}
 			return retval;
 		}
+		case CONS:
+		{
+			proftalk_expr_t retval;
+			retval.type = LIST_TYPE;
+			retval.expressions = makeList();
+			int i;
+			for (i=0;i<2;++i)
+			{
+				proftalk_expr_t *temp = malloc(sizeof(proftalk_expr_t));
+				*temp = eval(*(proftalk_expr_t *)pop(args), env);
+				pushBack(&retval.expressions, temp);
+			}
+			return retval;
+		}
 				
 		case PLUS:
 		case MINUS:

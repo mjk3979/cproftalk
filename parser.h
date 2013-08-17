@@ -10,7 +10,7 @@
 #define LIST_TYPE		3
 #define LAMBDA_TYPE		4
 
-#define NUM_KEYWORDS	22
+#define NUM_KEYWORDS	25
 
 #define LEFT_PAREN		0
 #define RIGHT_PAREN		1
@@ -36,6 +36,9 @@
 #define THIS_GUY		19
 #define ONE_LESS_CAR	20
 #define COME_FROM_BEHIND 21
+#define MAP				22
+#define FILTER			23
+#define CONS			24
 
 extern char *KEYWORDS[NUM_KEYWORDS];
 

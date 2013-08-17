@@ -161,6 +161,61 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			pop(&list.expressions);
 			return list;
 		}
+		case MAP:
+		{
+			proftalk_expr_t function = *(proftalk_expr_t *)pop(args);
+			proftalk_expr_t list = eval(*(proftalk_expr_t *)pop(args), env);
+			proftalk_expr_t retval;
+			retval.type = LIST_TYPE;
+			retval.expressions = makeList();
+			while (list.expressions.head != NULL)
+			{
+				proftalk_expr_t ele = *(proftalk_expr_t *)pop(&list.expressions);
+				proftalk_expr_t call;
+				call.type = LIST_TYPE;
+				call.expressions = makeList();
+				pushBack(&call.expressions, &function);
+				pushBack(&call.expressions, &ele);
+
+				proftalk_expr_t *temp = malloc(sizeof(proftalk_expr_t));
+				*temp = eval(call, env);
+				pushBack(&retval.expressions, temp);
+			}
+			return retval;
+		}
+		case FILTER:
+		{
+			puts("HERE");
+			proftalk_expr_t function = *(proftalk_expr_t *)pop(args);
+			proftalk_expr_t list = eval(*(proftalk_expr_t *)pop(args), env);
+			proftalk_expr_t retval;
+			retval.type = LIST_TYPE;
+			retval.expressions = makeList();
+			while (list.expressions.head != NULL)
+			{
+				proftalk_expr_t ele = *(proftalk_expr_t *)pop(&list.expressions);
+				proftalk_expr_t call;
+				call.type = LIST_TYPE;
+				call.expressions = makeList();
+				pushBack(&call.expressions, &function);
+				pushBack(&call.expressions, &ele);
+
+				proftalk_expr_t res = eval(call, env);
+				if (res.type != LITERAL_TYPE)
+				{
+					fputs("Invalid type for the result of a filter expression", stderr);
+					exit(1);
+				}
+				if (res.value != 0)
+				{
+					proftalk_expr_t *temp = malloc(sizeof(proftalk_expr_t));
+					*temp = ele;
+					pushBack(&retval.expressions, temp);
+				}
+			}
+			return retval;
+		}
+				
 		case PLUS:
 		case MINUS:
 		case MULTIPLY:

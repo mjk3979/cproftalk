@@ -13,6 +13,7 @@ proftalk_expr_t lex(ll_t *tokens)
 	{
 		retval.type = LIST_TYPE;
 		retval.expressions = makeList();
+		token = *(token_t *)peek(tokens);
 		while (!(token.type == KEYWORD_TYPE && token.value == RIGHT_PAREN))
 		{
 			proftalk_expr_t *ele = malloc(sizeof(proftalk_expr_t));

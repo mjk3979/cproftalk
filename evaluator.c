@@ -185,7 +185,6 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 		}
 		case FILTER:
 		{
-			puts("HERE");
 			proftalk_expr_t function = *(proftalk_expr_t *)pop(args);
 			proftalk_expr_t list = eval(*(proftalk_expr_t *)pop(args), env);
 			proftalk_expr_t retval;

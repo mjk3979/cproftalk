@@ -228,6 +228,22 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			}
 			return retval;
 		}
+		case EMPTY:
+		{
+			proftalk_expr_t list = eval(*(proftalk_expr_t *)pop(args), env);
+			if (list.type != LIST_TYPE)
+			{
+				fputs("Invalid argument to empty?", stderr);
+				exit(1);
+			}
+			proftalk_expr_t retval;
+			retval.type = LITERAL_TYPE;
+			if (list.expressions.head == NULL)
+				retval.value = 1;
+			else
+				retval.value = 0;
+			return retval;
+		}
 				
 		case PLUS:
 		case MINUS:

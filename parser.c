@@ -5,7 +5,7 @@
 #include "parser.h"
 #include "linkedlist.h"
 
-char *KEYWORDS[NUM_KEYWORDS] = {"(", ")", "insofaras", "bring-me-back-something-good", "yknow", "+", "-", "*", "/", "%", "=", "<", ">", "<=", ">=", "and", "or", "not", "begin", "this-guy", "one-less-car", "come-from-behind", "map", "filter", "cons"};
+char *KEYWORDS[NUM_KEYWORDS] = {"(", ")", "insofaras", "bring-me-back-something-good", "yknow", "+", "-", "*", "/", "%", "=", "<", ">", "<=", ">=", "and", "or", "not", "begin", "this-guy", "one-less-car", "come-from-behind", "map", "filter", "cons", "empty?"};
 
 static inline token_t getTokenFromString(char *str_token)
 {

@@ -10,7 +10,7 @@
 #define LIST_TYPE		3
 #define LAMBDA_TYPE		4
 
-#define NUM_KEYWORDS	26
+#define NUM_KEYWORDS	27
 
 #define LEFT_PAREN		0
 #define RIGHT_PAREN		1
@@ -40,6 +40,7 @@
 #define FILTER			23
 #define CONS			24
 #define EMPTY			25
+#define PRINT			26
 
 extern char *KEYWORDS[NUM_KEYWORDS];
 
@@ -48,6 +49,7 @@ typedef struct
 	int type;
 	char *name;
 	int value;
+	int line_number;
 } token_t;
 
 ll_t parse(FILE *fd, int *size);

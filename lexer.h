@@ -12,6 +12,7 @@ struct proftalk_expr_t
 	int value;
 	ll_t expressions;
 	char *name;
+	int line_number;
 };
 	
 proftalk_expr_t lex(ll_t *tokens);

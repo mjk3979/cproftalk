@@ -7,6 +7,22 @@
 #include "evaluator.h"
 #include "env.h"
 
+static void print_expr(proftalk_expr_t expr)
+{
+	if (expr.type == LIST_TYPE)
+	{
+		printf("( ");
+
+		while(expr.expressions.head != NULL)
+			print_expr(*(proftalk_expr_t *)pop(&expr.expressions));
+		printf(") ");
+	}
+	else
+	{
+		printf("%d ", expr.value);
+	}
+}
+
 static proftalk_expr_t handleUniary(int function_id, ll_t *args, env_t *env)
 {
 	proftalk_expr_t arg = eval(*(proftalk_expr_t *)pop(args), env);
@@ -15,7 +31,7 @@ static proftalk_expr_t handleUniary(int function_id, ll_t *args, env_t *env)
 
 	if (arg.type != LITERAL_TYPE)
 	{
-		fputs("Invalid first arg to arithmetic operation", stderr);
+		fprintf(stderr, "Invalid first arg to arithmetic operation\n\tOperation: %s\n", KEYWORDS[function_id]);
 		exit(1);
 	}
 
@@ -28,7 +44,7 @@ static proftalk_expr_t handleUniary(int function_id, ll_t *args, env_t *env)
 	return retval;
 }
 
-static proftalk_expr_t handleBinary(int function_id, ll_t *args, env_t *env)
+static proftalk_expr_t handleBinary(int function_id, ll_t *args, env_t *env, int line_number)
 {
 	proftalk_expr_t arg1 = eval(*(proftalk_expr_t *)pop(args), env);
 	proftalk_expr_t arg2 = eval(*(proftalk_expr_t *)pop(args), env);
@@ -38,12 +54,12 @@ static proftalk_expr_t handleBinary(int function_id, ll_t *args, env_t *env)
 
 	if (arg1.type != LITERAL_TYPE)
 	{
-		fputs("Invalid first arg to arithmetic operation", stderr);
+		fprintf(stderr, "Invalid first arg to arithmetic operation\n\tOperation: %s\n\tType: %d\n\tName: %s\nLine number: %d\n", KEYWORDS[function_id], arg1.type, arg1.name, line_number);
 		exit(1);
 	}
 	if (arg2.type != LITERAL_TYPE)
 	{
-		fputs("Invalid second arg to arithmetic operation", stderr);
+		fprintf(stderr, "Invalid second arg to arithmetic operation\n\tOperation: %s\n\n\tType: %d\nLine number: %d\n", KEYWORDS[function_id], arg2.type, line_number);
 		exit(1);
 	}
 	switch(function_id)
@@ -88,7 +104,7 @@ static proftalk_expr_t handleBinary(int function_id, ll_t *args, env_t *env)
 	return retval;
 }
 
-static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
+static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env, int line_number, env_t *parent_env)
 {
 	switch(function_id)
 	{
@@ -97,7 +113,7 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			proftalk_expr_t conditional = eval(*(proftalk_expr_t *)pop(args), env);
 			if (conditional.type != LITERAL_TYPE)
 			{
-				fputs("Invalid type for conditional.", stderr);
+				fprintf(stderr, "Invalid type for conditional.\nLine number: %d\n", line_number);
 				exit(1);
 			}
 			if (conditional.value == 0)
@@ -122,11 +138,11 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			proftalk_expr_t name_expr = *(proftalk_expr_t *)pop(args);
 			if (name_expr.type != VARIABLE_TYPE)
 			{
-				fputs("Invalid name for yknow", stderr);
+				fprintf(stderr, "Invalid name for yknow\nLine number: %d\n", line_number);
 				exit(1);
 			}
 			proftalk_expr_t value = eval(*(proftalk_expr_t *)pop(args), env);
-			env_insert(&global_env, name_expr.name, value);
+			env_insert(parent_env, name_expr.name, value);
 			return;
 		}
 		case BEGIN:
@@ -145,7 +161,7 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			proftalk_expr_t list = eval(*(proftalk_expr_t *)pop(args), env);
 			if (list.type != LIST_TYPE)
 			{
-				fputs("Invalid type for one-less-car", stderr);
+				fprintf(stderr, "Invalid type for one-less-car\nLine number: %d\n", line_number);
 				exit(1);
 			}
 			return *(proftalk_expr_t *)pop(&list.expressions);
@@ -155,7 +171,7 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			proftalk_expr_t list = eval(*(proftalk_expr_t *)pop(args), env);
 			if (list.type != LIST_TYPE)
 			{
-				fputs("Invalid type for one-less-car", stderr);
+				fprintf(stderr, "Invalid type for one-less-car\nLine number: %d\n", line_number);
 				exit(1);
 			}
 			pop(&list.expressions);
@@ -202,7 +218,7 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 				proftalk_expr_t res = eval(call, env);
 				if (res.type != LITERAL_TYPE)
 				{
-					fputs("Invalid type for the result of a filter expression", stderr);
+					fprintf(stderr, "Invalid type for the result of a filter expression\nLine number: %d\n", line_number);
 					exit(1);
 				}
 				if (res.value != 0)
@@ -233,7 +249,7 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 			proftalk_expr_t list = eval(*(proftalk_expr_t *)pop(args), env);
 			if (list.type != LIST_TYPE)
 			{
-				fputs("Invalid argument to empty?", stderr);
+				fprintf(stderr, "Invalid argument to empty?\nLine number: %d\n", line_number);
 				exit(1);
 			}
 			proftalk_expr_t retval;
@@ -244,6 +260,10 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 				retval.value = 0;
 			return retval;
 		}
+		case PRINT:
+			print_expr(eval(*(proftalk_expr_t *)pop(args), env));
+			puts("");
+			return;
 				
 		case PLUS:
 		case MINUS:
@@ -257,7 +277,7 @@ static proftalk_expr_t handleBuiltIn(int function_id, ll_t *args, env_t *env)
 		case GREATER_THAN_EQUAL:
 		case AND:
 		case OR:
-			return handleBinary(function_id, args, env);
+			return handleBinary(function_id, args, env, line_number);
 		case NOT:
 			return handleUniary(function_id, args, env);
 
@@ -291,14 +311,16 @@ proftalk_expr_t eval(proftalk_expr_t expr, env_t *parent_env)
 	{
 		case LIST_TYPE:
 		{
-			proftalk_expr_t function = eval(*(proftalk_expr_t *)pop(&expr.expressions), &env);
+			proftalk_expr_t temp = *(proftalk_expr_t *)pop(&expr.expressions);
+			proftalk_expr_t function = eval(temp, &env);
 			switch(function.type)
 			{
 				case KEYWORD_TYPE:
-					return handleBuiltIn(function.value, &expr.expressions, &env);
+					return handleBuiltIn(function.value, &expr.expressions, &env, temp.line_number, parent_env);
 				case LAMBDA_TYPE:
 					return evalLambda(function, &expr.expressions, &env);
 			}
+			printf("Failed to get function from type: %d\nAt line number: %d\n", function.type, temp.line_number);
 			assert(0);
 			break;
 		}

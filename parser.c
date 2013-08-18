@@ -5,7 +5,7 @@
 #include "parser.h"
 #include "linkedlist.h"
 
-char *KEYWORDS[NUM_KEYWORDS] = {"(", ")", "insofaras", "bring-me-back-something-good", "yknow", "+", "-", "*", "/", "%", "=", "<", ">", "<=", ">=", "and", "or", "not", "begin", "this-guy", "one-less-car", "come-from-behind", "map", "filter", "cons", "empty?"};
+char *KEYWORDS[NUM_KEYWORDS] = {"(", ")", "insofaras", "bring-me-back-something-good", "yknow", "+", "-", "*", "/", "%", "=", "<", ">", "<=", ">=", "and", "or", "not", "begin", "this-guy", "one-less-car", "come-from-behind", "map", "filter", "cons", "empty?", "print"};
 
 static inline token_t getTokenFromString(char *str_token)
 {
@@ -89,8 +89,10 @@ ll_t parse(FILE *fd, int *size)
 	char *line = NULL;
 	int cont = 1;
 	size_t linesize;
+	int line_number = 0;
 	while(cont)
 	{
+		++line_number;
 		if (getline(&line, &linesize, fd) == -1)
 			cont = 0;
 		else
@@ -101,6 +103,7 @@ ll_t parse(FILE *fd, int *size)
 			{
 				token = malloc(sizeof(token_t));
 				*token = getTokenFromString(str_token);
+				token->line_number = line_number;
 				pushBack(&tokens, token);
 
 				++num_tokens;

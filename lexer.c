@@ -29,6 +29,7 @@ proftalk_expr_t lex(ll_t *tokens)
 		retval.type = token.type;
 		retval.value = token.value;
 		retval.name = token.name;
+		retval.line_number = token.line_number;
 		return retval;
 	}
 }

@@ -1,7 +1,7 @@
 cproftalk
 =========
 
-A proftalk interpreter written in C that is designed for speed and with the goal of eventually using CUDA to evaluate.
+A proftalk interpreter written in C that is designed for a good speedup with the goal of eventually using CUDA to evaluate.
 
 What is proftalk?
 =================
